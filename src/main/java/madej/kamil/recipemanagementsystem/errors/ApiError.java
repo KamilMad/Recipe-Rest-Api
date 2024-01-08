@@ -1,4 +1,4 @@
-package madej.kamil.recipemanagementsystem.payload;
+package madej.kamil.recipemanagementsystem.errors;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

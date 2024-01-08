@@ -1,6 +1,5 @@
 package madej.kamil.recipemanagementsystem.errors;
 
-import madej.kamil.recipemanagementsystem.payload.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

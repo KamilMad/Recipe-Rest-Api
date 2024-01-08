@@ -3,7 +3,6 @@ package madej.kamil.recipemanagementsystem.controller;
 import jakarta.validation.Valid;
 import madej.kamil.recipemanagementsystem.model.User;
 import madej.kamil.recipemanagementsystem.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

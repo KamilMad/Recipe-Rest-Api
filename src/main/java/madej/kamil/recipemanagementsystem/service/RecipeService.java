@@ -32,6 +32,9 @@ public class RecipeService {
     }
 
     public Long addRecipe(Recipe recipe) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("Such a user not found"));
 
         Recipe newRecipe = new Recipe();
 
@@ -41,12 +44,6 @@ public class RecipeService {
         newRecipe.setDescription(recipe.getDescription());
         newRecipe.setIngredients(recipe.getIngredients());
         newRecipe.setDirections(recipe.getDirections());
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        User user = userRepository.findByEmail(auth.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("Suche a user not found"));
-
         newRecipe.setUser(user);
 
         recipeRepository.save(newRecipe);
@@ -104,6 +101,7 @@ public class RecipeService {
         }
 
         List<Recipe> recipes;
+
         if (category != null){
             recipes = recipeRepository.findByCategoryIgnoreCaseOrderByDateDesc(category);
         }

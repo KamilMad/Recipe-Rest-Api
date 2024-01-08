@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -23,38 +23,38 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @PostMapping("/recipe/new")
+    @PostMapping("/new")
     public ResponseEntity<IdDto> addRecipe(@Valid @RequestBody Recipe recipe){
 
         return new ResponseEntity<>(new IdDto(recipeService.addRecipe(recipe))
                 ,HttpStatus.OK);
     }
 
-    @GetMapping("/recipe/{id}")
+    @GetMapping("/{id}")
     public RecipeDto getRecipes(@PathVariable Long id){
         return recipeService.getRecipeById(id);
     }
 
 
-    @DeleteMapping("/recipe/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable Long id){
         recipeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/recipe/test")
+    @GetMapping("/test")
     public String test(){
         return "Hello world";
     }
 
-    @PutMapping("/recipe/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<HttpStatus> updateRecipe(@PathVariable Long id, @Valid @RequestBody Recipe recipe){
         recipeService.updateById(id, recipe);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/recipe/search")
+    @GetMapping("/search")
     public ResponseEntity<List<RecipeDto>> getAllRecipe(@RequestParam(name = "category", required = false) String category,
                                                         @RequestParam(name = "name", required = false) String name){
 
