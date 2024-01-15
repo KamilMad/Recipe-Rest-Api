@@ -3,6 +3,7 @@ package madej.kamil.recipemanagementsystem.controller;
 import jakarta.validation.Valid;
 import madej.kamil.recipemanagementsystem.model.User;
 import madej.kamil.recipemanagementsystem.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Long> addUser(@Valid @RequestBody User user){
-        return userService.saveUser(user);
+        Long userId = userService.saveUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userId);
     }
 }

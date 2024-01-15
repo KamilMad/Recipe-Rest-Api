@@ -1,5 +1,6 @@
 package madej.kamil.recipemanagementsystem.service;
 
+import madej.kamil.recipemanagementsystem.errors.UserAlreadyExistsException;
 import madej.kamil.recipemanagementsystem.model.Recipe;
 import madej.kamil.recipemanagementsystem.model.User;
 import madej.kamil.recipemanagementsystem.repository.RecipeRepository;
@@ -32,17 +33,17 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public ResponseEntity<Long> saveUser(User user){
+    public Long saveUser(User user){
 
-        if (userExistsByEmail(user.getEmail())){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (userExistsByEmail(user.getEmail())) {
+            throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists");
         }
 
         User newUser = createUserFromRequest(user);
 
         userRepository.save(newUser);
 
-        return new ResponseEntity<>(newUser.getId(),HttpStatus.OK);
+        return newUser.getId();
 
     }
 

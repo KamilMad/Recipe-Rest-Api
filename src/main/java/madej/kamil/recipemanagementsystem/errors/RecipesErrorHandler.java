@@ -34,4 +34,8 @@ public class RecipesErrorHandler {
         return new ResponseEntity<>(new ApiError("PreAuthorize error"), HttpStatus.FORBIDDEN);
     }
 
+    public ResponseEntity<ApiError> UserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ResponseEntity.badRequest().body(new ApiError(ex.getMessage()));
+    }
+
 }
