@@ -23,9 +23,8 @@ public class RecipeController {
 
     @PostMapping("/new")
     public ResponseEntity<IdDto> addRecipe(@Valid @RequestBody Recipe recipe){
-
-        return new ResponseEntity<>(new IdDto(recipeService.addRecipe(recipe))
-                ,HttpStatus.OK);
+        Long recipeId = recipeService.addRecipe(recipe);
+        return ResponseEntity.ok(new IdDto(recipeId));
     }
 
     @GetMapping("/{id}")
@@ -33,31 +32,25 @@ public class RecipeController {
         return recipeService.getRecipeById(id);
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable Long id){
         recipeService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/test")
-    public String test(){
-        return "Hello world";
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<HttpStatus> updateRecipe(@PathVariable Long id, @Valid @RequestBody Recipe recipe){
         recipeService.updateById(id, recipe);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<RecipeDto>> getAllRecipe(@RequestParam(name = "category", required = false) String category,
-                                                        @RequestParam(name = "name", required = false) String name){
+    public ResponseEntity<List<RecipeDto>> getAllRecipe(
+            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "name", required = false) String name){
 
         List<RecipeDto> recipes = recipeService.findAll(category, name);
-        return new ResponseEntity<>(recipes, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 }
