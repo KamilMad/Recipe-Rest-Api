@@ -29,7 +29,7 @@ public class AuthController {
     public ResponseEntity<String> authenticateUser(@Valid @RequestBody User user){
 
         Authentication authentication = authenticationManager.authenticate(
-                //UsernamePasswordAuthenticationToken is impl of "Authentication"
+                //UsernamePasswordAuthenticationToken is implemention of "Authentication"
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
                         user.getPassword()));

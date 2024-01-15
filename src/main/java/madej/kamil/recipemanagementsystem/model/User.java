@@ -36,13 +36,13 @@ public class User {
     private Set<String> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Recipe> recipes;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
+        if (!(o instanceof User user)) return false;
         return id == user.id &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&

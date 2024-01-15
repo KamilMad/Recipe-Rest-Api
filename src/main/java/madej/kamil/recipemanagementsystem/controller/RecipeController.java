@@ -5,10 +5,8 @@ import madej.kamil.recipemanagementsystem.model.Recipe;
 import madej.kamil.recipemanagementsystem.payload.IdDto;
 import madej.kamil.recipemanagementsystem.payload.RecipeDto;
 import madej.kamil.recipemanagementsystem.service.RecipeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
