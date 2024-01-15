@@ -34,27 +34,36 @@ public class UserService {
 
     public ResponseEntity<Long> saveUser(User user){
 
-        Optional<User> existingUser = findUserByEmail(user.getEmail());
-
-        if (existingUser.isPresent()){
+        if (userExistsByEmail(user.getEmail())){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User newUser = new User();
-        newUser.setId(user.getId());
-        newUser.setEmail(user.getEmail());
-
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        newUser.setPassword(encodedPassword);
-
-        newUser.setRoles(Set.of("USER"));
-
-        List<Recipe> recipes = recipeRepository.findByUserId(user.getId());
-        newUser.setRecipes(recipes);
+        User newUser = createUserFromRequest(user);
 
         userRepository.save(newUser);
 
         return new ResponseEntity<>(newUser.getId(),HttpStatus.OK);
 
+    }
+
+    private User createUserFromRequest(User user) {
+        return User.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(encodePassword(user.getPassword()))
+                .roles(Set.of("USER"))
+                .recipes(getRecipesForUser(user))
+                .build();
+    }
+
+    private List<Recipe> getRecipesForUser(User user) {
+        return recipeRepository.findByUserId(user.getId());
+    }
+
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
+    }
+    private boolean userExistsByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }

@@ -14,6 +14,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@Builder
 public class User {
 
     @Id
